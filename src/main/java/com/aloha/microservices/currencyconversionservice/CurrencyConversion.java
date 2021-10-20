@@ -2,14 +2,10 @@ package com.aloha.microservices.currencyconversionservice;
 
 import java.math.BigDecimal;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
@@ -22,5 +18,15 @@ public class CurrencyConversion {
     private BigDecimal quantity;
     private BigDecimal totalCalculatedAmount;
     private String environment;
+
+    public CurrencyConversion(CurrencyExchange exchg, BigDecimal quantity, String environment) {
+        this.id = exchg.getId();
+        this.from = exchg.getFrom();
+        this.to = exchg.getTo();
+        this.conversionMultiplier = exchg.getConversionMultiplier();
+        this.quantity = quantity;
+        this.totalCalculatedAmount = quantity.multiply(conversionMultiplier);
+        this.environment = environment;
+    }
 
 }
