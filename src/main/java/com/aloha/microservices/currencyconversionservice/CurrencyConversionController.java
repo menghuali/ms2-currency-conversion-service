@@ -32,14 +32,14 @@ public class CurrencyConversionController {
         ResponseEntity<CurrencyExchange> resp = new RestTemplate().getForEntity(
                 "http://localhost:8000/currency-exchange/from/{from}/to/{to}", CurrencyExchange.class, uriParams);
         CurrencyExchange exchg = resp.getBody();
-        return new CurrencyConversion(exchg, quantity, environment.getProperty("local.server.port"));
+        return new CurrencyConversion(exchg, quantity, environment.getProperty("local.server.port") + " resttemplate");
     }
 
     @GetMapping("/feign/from/{from}/to/{to}/quantity/{quantity}")
     public CurrencyConversion convertFeign(@PathVariable("from") String from, @PathVariable("to") String to,
             @PathVariable("quantity") BigDecimal quantity) {
         CurrencyExchange exchg = currencyExchangeProxy.getCurrencyExchange(from, to);
-        return new CurrencyConversion(exchg, quantity, environment.getProperty("local.server.port"));
+        return new CurrencyConversion(exchg, quantity, environment.getProperty("local.server.port") + " feign");
     }
 
 }
