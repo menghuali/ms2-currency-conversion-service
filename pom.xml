@@ -35,6 +35,12 @@
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
 		</dependency>
 
+		<!-- Naming Server Client -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
