@@ -18,9 +18,6 @@ import org.springframework.web.client.RestTemplate;
 public class CurrencyConversionController {
 
     @Autowired
-    private Environment environment;
-
-    @Autowired
     private CurrencyExchangeProxy currencyExchangeProxy;
 
     @GetMapping("/resttemplate/from/{from}/to/{to}/quantity/{quantity}")
@@ -32,14 +29,14 @@ public class CurrencyConversionController {
         ResponseEntity<CurrencyExchange> resp = new RestTemplate().getForEntity(
                 "http://localhost:8000/currency-exchange/from/{from}/to/{to}", CurrencyExchange.class, uriParams);
         CurrencyExchange exchg = resp.getBody();
-        return new CurrencyConversion(exchg, quantity, environment.getProperty("local.server.port") + " resttemplate");
+        return new CurrencyConversion(exchg, quantity, exchg.getEnvironment() + " resttemplate");
     }
 
     @GetMapping("/feign/from/{from}/to/{to}/quantity/{quantity}")
     public CurrencyConversion convertFeign(@PathVariable("from") String from, @PathVariable("to") String to,
             @PathVariable("quantity") BigDecimal quantity) {
         CurrencyExchange exchg = currencyExchangeProxy.getCurrencyExchange(from, to);
-        return new CurrencyConversion(exchg, quantity, environment.getProperty("local.server.port") + " feign");
+        return new CurrencyConversion(exchg, quantity, exchg.getEnvironment() + " feign");
     }
 
 }

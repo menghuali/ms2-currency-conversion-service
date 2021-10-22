@@ -13,5 +13,6 @@ public class CurrencyExchange {
     private String from;
     private String to;
     private BigDecimal conversionMultiplier;
+    private String environment;
 
 }
